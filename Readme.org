@@ -1,0 +1,4 @@
+* Haskell Gtk tutorial projects
+
+This is supposed to be a folder for projects for my translation of the Python
+Gtk tutorial.

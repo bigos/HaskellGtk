@@ -1,0 +1,64 @@
+{-# LANGUAGE OverloadedStrings #-}
+
+module Main where
+
+import qualified GI.Gtk as GI (init,
+                               main)
+import GI.Gtk (mainQuit,
+               onWidgetDestroy, containerSetBorderWidth,
+               windowNew, windowSetTitle, windowSetDefaultSize, windowSetTitlebar,
+               widgetShowAll, containerAdd,
+               headerBarNew,headerBarSetShowCloseButton, headerBarSetTitle,
+               headerBarPackEnd, headerBarPackStart,
+               boxNew, buttonNew, arrowNew, textViewNew,
+               styleContextAddClass, widgetGetStyleContext
+              )
+import GI.Gtk.Objects.Button
+import GI.Gtk.Objects.Image
+import GI.Gio.Objects.ThemedIcon
+import GI.Gtk.Objects.StyleContext
+
+import GI.Gtk.Enums
+       (WindowType(..), IconSize(..), Orientation(..), ArrowType(..), ShadowType(..))
+
+headerBarWindow = do
+  win <- windowNew WindowTypeToplevel
+  windowSetTitle win "Header Bar Demo"
+  containerSetBorderWidth win 10
+  windowSetDefaultSize win 400 200
+
+  hb <- headerBarNew
+  headerBarSetShowCloseButton hb True
+  headerBarSetTitle hb (Just "HeaderBar example")
+  windowSetTitlebar win (Just hb)
+
+  button1 <- buttonNew
+  icon <- themedIconNew "mail-send-receive-symbolic"
+  image <- imageNewFromGicon icon 4
+  containerAdd button1 image
+  headerBarPackEnd hb button1
+
+  box <- boxNew OrientationHorizontal 10
+  (widgetGetStyleContext box) >>= (\c -> styleContextAddClass c "linked")
+
+  button2 <- buttonNew
+  arrowNew ArrowTypeLeft ShadowTypeNone >>= (\a-> containerAdd button2 a)
+  containerAdd box button2
+
+  button3 <- buttonNew
+  arrowNew ArrowTypeRight ShadowTypeNone >>= (\a -> containerAdd button3 a)
+  containerAdd box button3
+
+  headerBarPackStart hb box
+  textViewNew >>= (\w -> containerAdd win w)
+
+  return win
+
+main :: IO ()
+main = do
+  _ <- GI.init Nothing
+
+  win <- headerBarWindow
+  _ <- onWidgetDestroy win mainQuit
+  widgetShowAll win
+  GI.main

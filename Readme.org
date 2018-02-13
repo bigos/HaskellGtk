@@ -2,6 +2,8 @@
 
 This is supposed to be a folder for projects for my translation of the [[http://python-gtk-3-tutorial.readthedocs.io/en/latest/][Python Gtk+3 tutorial]].
 
-Not all parts are complete.
+Not all examples are complete.
 
-Last project added is translation of [[http://python-gtk-3-tutorial.readthedocs.io/en/latest/layout.html#notebook][5.7 Notebook]]  from the Python tutorial.
+Last example added is translation of
+[[http://python-gtk-3-tutorial.readthedocs.io/en/latest/label.html#example][Label]]
+from the Python tutorial.
